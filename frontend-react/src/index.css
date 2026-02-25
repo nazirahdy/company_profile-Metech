@@ -1,0 +1,57 @@
+:root {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  /* Memastikan warna dasar putih agar tidak mengikuti dark mode browser */
+  color: #213547;
+  background-color: #ffffff;
+}
+
+#root {
+  width: 100%;
+  max-width: 100% !important; /* Menghilangkan batas 1280px */
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important; /* Agar teks tidak dipaksa ke tengah */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: block; /* Mengubah flex menjadi block agar full width */
+  width: 100%;
+  overflow-x: hidden; /* Mencegah scroll ke samping yang mengganggu */
+}
+
+/* Pastikan semua section mengambil lebar penuh */
+section {
+  width: 100%;
+  padding: 80px 0;
+}
+
+/* Memperbaiki gambar agar responsif */
+img {
+  max-width: 100%;
+  height: auto;
+}
+/* --- Bagian Atas Tetap Sama --- */
+
+html, body, #root, .App {
+  background-color: #ffffff !important; /* Dasar web tetap putih */
+}
+
+/* PERBAIKAN DI SINI: Hapus background putih !important */
+section {
+  margin: 0 !important;
+  padding: 80px 0;
+  width: 100%;
+  display: block;
+  border: none !important;
+  /* Jangan tulis background-color di sini agar bisa diatur tiap halaman */
+}
+
+/* Tambahkan ini untuk memastikan tidak ada sela antar halaman */
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
