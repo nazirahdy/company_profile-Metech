@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Tambahkan ini untuk navigasi
 
 const Leaders = () => {
   const [leaders, setLeaders] = useState([]);
@@ -10,7 +11,8 @@ const Leaders = () => {
     const fetchLeaders = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/leaders`);
-        setLeaders(response.data);
+        // Jika ingin hanya menampilkan beberapa leader di beranda, gunakan .slice(0, 4)
+        setLeaders(response.data.slice(0, 4)); 
         setLoading(false);
       } catch (error) {
         console.error("Error fetching leaders data:", error);
@@ -54,7 +56,7 @@ const Leaders = () => {
                     width: '180px',
                     height: '180px',
                     borderRadius: '50%',
-                    border: '1px solid #eee', // Border default tipis
+                    border: '1px solid #eee',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -65,17 +67,14 @@ const Leaders = () => {
                   }}
                 >
                   <img 
-                    /* PERBAIKAN: Menggunakan .photo sesuai Migration */
                     src={`${API_BASE_URL}/storage/${leader.photo}`} 
                     alt={leader.name} 
                     className="img-fluid rounded-circle" 
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    /* Placeholder jika foto gagal load */
                     onError={(e) => { e.target.src = "https://via.placeholder.com/180?text=No+Photo"; }} 
                   />
                 </div>
                 <h5 className="fw-bold mb-1" style={{ color: '#1a1a3d' }}>{leader.name}</h5>
-                {/* PERBAIKAN: Menggunakan .position sesuai Migration */}
                 <p className="text-muted small" style={{ letterSpacing: '1px', textTransform: 'uppercase' }}>
                   {leader.position}
                 </p>
@@ -83,12 +82,42 @@ const Leaders = () => {
             </div>
           ))}
         </div>
+
+        {/* --- TOMBOL TAMBAHAN DI SINI --- */}
+        <div className="mt-5" data-aos="fade-up">
+          <Link to="/team" className="btn-see-team">
+            See All Team <i className="bi bi-arrow-right ms-2"></i>
+          </Link>
+        </div>
+        {/* ------------------------------ */}
+
       </div>
+
       <style>{`
         .img-container:hover { 
             transform: translateY(-10px); 
             border-color: #00ced1 !important; 
             box-shadow: 0 15px 30px rgba(0, 206, 209, 0.2) !important;
+        }
+
+        .btn-see-team {
+          display: inline-block;
+          padding: 12px 35px;
+          border-radius: 50px;
+          background: #1a1a3d;
+          color: #fff;
+          font-weight: 700;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          box-shadow: 0 10px 20px rgba(26, 26, 61, 0.15);
+          border: 2px solid #1a1a3d;
+        }
+
+        .btn-see-team:hover {
+          background: transparent;
+          color: #1a1a3d;
+          transform: translateY(-3px);
+          box-shadow: 0 15px 30px rgba(26, 26, 61, 0.1);
         }
       `}</style>
     </section>
