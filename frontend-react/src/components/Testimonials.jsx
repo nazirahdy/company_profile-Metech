@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+// Baris autoplay CSS dihapus karena sudah include di core Swiper
+
+// Import required modules
+import { Pagination, Autoplay } from 'swiper/modules';
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -21,39 +30,49 @@ const Testimonials = () => {
           <div style={{ width: '50px', height: '5px', background: '#00ced1', margin: '15px auto', borderRadius: '10px' }}></div>
         </div>
 
-        <div className="row g-4">
+        {/* Swiper Slider */}
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          spaceBetween={30}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          autoplay={{ 
+            delay: 3000, 
+            disableOnInteraction: false 
+          }}
+          breakpoints={{
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          }}
+          className="pb-5"
+        >
           {testimonials.map((item) => (
-            <div className="col-lg-4 col-md-6" key={item.id}>
-              <div className="testimonial-card shadow-sm h-100 p-4 text-center">
-                
-                {/* Icon Tanda Kutip Dekoratif */}
+            <SwiperSlide key={item.id}>
+              <div className="testimonial-card shadow-sm h-100 p-4 text-center mb-4">
                 <div className="quote-mark">“</div>
-
                 <div className="mb-4">
                   <img 
                     src={item.avatar ? `${API_BASE_URL}/storage/${item.avatar}` : 'https://via.placeholder.com/80'} 
                     className="avatar-img shadow"
                     alt={item.name}
+                    onError={(e) => { e.target.src = "https://via.placeholder.com/80"; }}
                   />
                 </div>
-
                 <div className="content-area">
                   <p className="testimonial-text text-secondary mb-4">
-                    {item.content}
+                    "{item.content}"
                   </p>
-                  
                   <div className="client-info">
-                    <h6 className="fw-bold mb-1 text-dark" style={{ letterSpacing: '0.5px' }}>{item.name}</h6>
+                    <h6 className="fw-bold mb-1 text-dark">{item.name}</h6>
                     <small className="position-tag">{item.position}</small>
                   </div>
                 </div>
               </div>
-            </div>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </div>
 
-      {/* CSS Langsung di dalam Komponen */}
       <style>{`
         .testimonial-card {
           background: #ffffff;
@@ -63,12 +82,10 @@ const Testimonials = () => {
           position: relative;
           z-index: 1;
         }
-
         .testimonial-card:hover {
           transform: translateY(-10px);
           box-shadow: 0 15px 35px rgba(0, 206, 209, 0.15) !important;
         }
-
         .quote-mark {
           position: absolute;
           top: 10px;
@@ -77,9 +94,7 @@ const Testimonials = () => {
           color: #00ced1;
           opacity: 0.1;
           font-family: serif;
-          line-height: 1;
         }
-
         .avatar-img {
           width: 90px;
           height: 90px;
@@ -88,13 +103,12 @@ const Testimonials = () => {
           border: 4px solid #fff;
           outline: 2px solid #00ced1;
         }
-
         .testimonial-text {
           font-style: italic;
           line-height: 1.6;
           font-size: 0.95rem;
+          min-height: 80px;
         }
-
         .position-tag {
           color: #00ced1;
           font-weight: 600;
@@ -104,9 +118,8 @@ const Testimonials = () => {
           padding: 4px 12px;
           border-radius: 50px;
         }
-
-        .bg-light {
-          background-color: #f9fbfb !important;
+        .swiper-pagination-bullet-active {
+          background: #00ced1 !important;
         }
       `}</style>
     </section>

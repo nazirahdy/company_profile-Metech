@@ -46,7 +46,7 @@ const PortfolioDetail = () => {
               />
             </div>
 
-            <div className="card border-0 bg-light p-4 rounded-4 shadow-sm">
+            <div className="card border-0 bg-light p-4 rounded-4 shadow-sm mb-4">
               <div className="row">
                 <div className="col-6">
                   <small className="text-muted d-block">Client</small>
@@ -55,15 +55,40 @@ const PortfolioDetail = () => {
                 <div className="col-6">
                   <small className="text-muted d-block">Link</small>
                   {project.project_url ? (
-                    <a href={project.project_url} target="_blank" rel="noreferrer" className="text-info fw-bold">Kunjungi Proyek</a>
+                    <a href={project.project_url} target="_blank" rel="noreferrer" className="text-info fw-bold text-decoration-none">Kunjungi Proyek</a>
                   ) : <span>-</span>}
                 </div>
               </div>
             </div>
-            <Link to="/portfolio-explore" className="btn btn-dark mt-4 w-100 rounded-pill py-2 shadow-sm">Kembali ke Portfolio</Link>
+
+            {/* TOMBOL KEMBALI DENGAN STYLE TURQUOISE SOLID */}
+            <Link 
+              to="/portfolio-explore" 
+              className="btn-kembali-portfolio text-decoration-none d-inline-block text-center w-100"
+              style={{
+                backgroundColor: '#00ced1',
+                color: '#fff',
+                padding: '12px 30px',
+                borderRadius: '50px',
+                fontWeight: '600',
+                transition: 'all 0.3s ease',
+                border: '2px solid #00ced1'
+              }}
+            >
+              <i className="bi bi-arrow-left me-2"></i> Kembali ke Portfolio
+            </Link>
           </div>
         </div>
       </div>
+
+      <style>{`
+        .btn-kembali-portfolio:hover {
+          background-color: transparent !important;
+          color: #00ced1 !important;
+          transform: translateY(-3px);
+          box-shadow: 0 10px 20px rgba(0, 206, 209, 0.2);
+        }
+      `}</style>
     </div>
   );
 };

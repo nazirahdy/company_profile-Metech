@@ -25,23 +25,16 @@ const FullBlog = () => {
   };
 
   return (
-    <div className="bg-light min-vh-100" style={{ paddingTop: '100px', paddingBottom: '80px' }}>
+    <div className="bg-white min-vh-100" style={{ paddingTop: '100px', paddingBottom: '80px' }}>
       <div className="container">
         
         {/* HEADER SECTION */}
-        <div className="row align-items-center mb-5" data-aos="fade-up">
-          <div className="col-md-8 text-center text-md-start">
-            <h2 className="fw-black mb-0" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#1a1a3d' }}>
-              OUR FULL <span style={{ color: '#00ced1' }}>BLOG</span>
-            </h2>
-            <div className="mx-auto mx-md-0" style={{ width: '60px', height: '4px', background: '#00ced1', marginTop: '10px' }}></div>
-            <p className="text-muted mt-3">Temukan berita dan update teknologi terbaru dari kami</p>
-          </div>
-          <div className="col-md-4 text-center text-md-end mt-4 mt-md-0">
-            <Link to="/" className="btn btn-info text-white rounded-pill px-4 fw-bold shadow-sm back-btn" style={{ backgroundColor: '#00ced1', border: 'none' }}>
-              <i className="bi bi-arrow-left me-2"></i> Kembali ke Beranda
-            </Link>
-          </div>
+        <div className="text-center mb-5" data-aos="fade-up">
+          <h2 className="fw-black mb-0" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#1a1a3d' }}>
+            OUR FULL <span style={{ color: '#00ced1' }}>BLOG</span>
+          </h2>
+          <div style={{ width: '60px', height: '4px', background: '#00ced1', margin: '15px auto 0', borderRadius: '10px' }}></div>
+          <p className="text-muted mt-3">Temukan berita dan update teknologi terbaru dari kami</p>
         </div>
 
         {/* BLOG GRID */}
@@ -60,23 +53,21 @@ const FullBlog = () => {
                   </div>
                   
                   <div className="p-4">
-                    {/* INFO META: TANGGAL & AUTHOR */}
                     <div className="d-flex align-items-center mb-3 text-muted small flex-wrap gap-3">
                       <div className="d-flex align-items-center">
-                        <i className="bi bi-calendar3 me-2 text-info"></i>
+                        <i className="bi bi-calendar3 me-2" style={{ color: '#00ced1' }}></i>
                         {new Date(post.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
                       </div>
                       <div className="d-flex align-items-center">
-                      <i className="bi bi-person-circle me-2 text-info"></i>
-                      {post.creator_name || 'Admin'}
-                    </div>
+                        <i className="bi bi-person-circle me-2" style={{ color: '#00ced1' }}></i>
+                        {post.creator_name || 'Admin'}
+                      </div>
                     </div>
                     
                     <h5 className="fw-bold mb-3 text-dark" style={{ fontSize: '1.2rem', lineHeight: '1.5', height: '3.0em', overflow: 'hidden' }}>
                       {post.title}
                     </h5>
                     
-                    {/* RINGKASAN TEKS (Deskripsi disembunyikan di sini, hanya tampil di detail) */}
                     <p className="text-muted small mb-4" style={{ height: '3em', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical' }}>
                       {post.content ? post.content.replace(/<[^>]*>?/gm, '').substring(0, 100) + "..." : ""}
                     </p>
@@ -96,35 +87,69 @@ const FullBlog = () => {
           )}
         </div>
 
-        {/* PAGINATION */}
-        {totalPages > 1 && (
-          <div className="d-flex justify-content-center mt-5 gap-2" data-aos="fade-up">
-            {[...Array(totalPages)].map((_, i) => (
-              <button
-                key={i + 1}
-                onClick={() => handlePaginate(i + 1)}
-                className={`btn shadow-sm ${currentPage === i + 1 ? 'btn-info text-white' : 'btn-white bg-white'}`}
-                style={{ 
-                  width: '45px', 
-                  height: '45px', 
-                  borderRadius: '12px', 
-                  fontWeight: 'bold', 
-                  border: 'none',
-                  transition: '0.3s'
-                }}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
-        )}
+        {/* AREA NAVIGASI (PAGINATION & TOMBOL KEMBALI DI SEBELAH KANANNYA) */}
+        <div className="d-flex justify-content-center align-items-center mt-5 gap-3 pt-4 border-top">
+          
+          {/* NOMOR HALAMAN */}
+          {totalPages > 1 && (
+            <div className="d-flex gap-2">
+              {[...Array(totalPages)].map((_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => handlePaginate(i + 1)}
+                  className={`btn shadow-sm`}
+                  style={{ 
+                    width: '45px', 
+                    height: '45px', 
+                    borderRadius: '12px', 
+                    fontWeight: 'bold', 
+                    border: 'none',
+                    transition: '0.3s',
+                    backgroundColor: currentPage === i + 1 ? '#00ced1' : '#fff',
+                    color: currentPage === i + 1 ? '#fff' : '#555'
+                  }}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* TOMBOL KEMBALI (Desain disamakan dengan FullPortfolio) */}
+          <Link 
+            to="/" 
+            className="btn-kembali-blog text-decoration-none shadow-sm"
+            style={{
+              backgroundColor: '#00ced1',
+              color: '#fff',
+              padding: '0 25px',
+              borderRadius: '12px',
+              fontWeight: '600',
+              transition: 'all 0.3s ease',
+              border: '2px solid #00ced1',
+              fontSize: '14px',
+              height: '45px',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            Kembali
+          </Link>
+        </div>
       </div>
 
       <style>{`
         .blog-card { transition: all 0.3s ease; }
         .blog-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important; }
         .blog-card:hover .blog-img { transform: scale(1.1); }
-        .back-btn:hover { background-color: #1a1a3d !important; color: white !important; transform: translateX(-5px); transition: 0.3s; }
+        
+        .btn-kembali-blog:hover {
+          background-color: transparent !important;
+          color: #00ced1 !important;
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(0, 206, 209, 0.2);
+        }
+
         .readmore-link:hover { color: #1a1a3d !important; }
       `}</style>
     </div>

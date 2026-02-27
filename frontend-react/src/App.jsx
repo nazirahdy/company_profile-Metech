@@ -15,9 +15,10 @@ import VisionMission from './components/VisionMission';
 import Services from './components/Services';
 import Features from './components/Features';
 import Contact from './components/Contact';
-import Leaders from './components/Leaders';
+import Leaders from './components/leeders/Leaders';
+import TeamPage from './components/leeders/TeamPage'; // Pastikan path file ini benar
 import Clients from './components/Clients';
-import Testimonials from './components/Testimonials'; // Import Testimonials Baru
+import Testimonials from './components/Testimonials';
 
 // Komponen Portfolio
 import Portfolio from './components/portfolioc/Portfolio'; 
@@ -38,6 +39,11 @@ function AppContent() {
   const hideNavbarPaths = ['/portfolio-explore-hidden']; 
   const showNavbar = !hideNavbarPaths.includes(location.pathname);
 
+  // Efek scroll ke atas otomatis setiap kali pindah halaman
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <div className="App d-flex flex-column min-vh-100">
       {showNavbar && <Navbar />}
@@ -54,15 +60,16 @@ function AppContent() {
               <Features />
               <section id="services"><Services /></section>
               <section id="portfolio"><Portfolio /></section>
-
               <section id="blog"><Blog /></section>
               <Leaders />
-              {/* SECTION TESTIMONI DI SINI */}
               <section id="testimonials"><Testimonials /></section>
               <Clients />
               <section id="contact"><Contact /></section>
             </main>
           } />
+
+          {/* HALAMAN EKSPLORASI TEAM (BARU DITAMBAHKAN) */}
+          <Route path="/team" element={<TeamPage />} />
 
           {/* HALAMAN EKSPLORASI PORTFOLIO */}
           <Route path="/portfolio-explore" element={<FullPortfolio />} />
