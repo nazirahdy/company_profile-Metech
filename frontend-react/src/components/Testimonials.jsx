@@ -17,7 +17,7 @@ const Testimonials = () => {
         
         {/* Header */}
         <div className="text-center mb-5">
-          <h2 className="fw-bold display-6">Client <span style={{ color: '#00ced1' }}>Testimonials</span></h2>
+          <h2 className="fw-bold display-6">Client <span style={{ color: '#00ced1' }}>Testimoni</span></h2>
           <div style={{ width: '50px', height: '5px', background: '#00ced1', margin: '15px auto', borderRadius: '10px' }}></div>
         </div>
 

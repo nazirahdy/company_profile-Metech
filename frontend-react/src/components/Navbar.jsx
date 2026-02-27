@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-// 1. Pindahkan menuItems ke luar agar tidak menyebabkan warning di useEffect
 const menuItems = [
   { name: 'HOME', link: '#home' },
   { name: 'ABOUT', link: '#about' },
   { name: 'SERVICES', link: '#services' },
   { name: 'PORTFOLIO', link: '#portfolio' },
   { name: 'BLOG', link: '#blog' },
-  { name: 'TESTIMONIAL', link: '#testimonials' },
+  { name: 'TESTIMONI', link: '#testimonials' },
   { name: 'CONTACT', link: '#contact' },
 ];
 
@@ -19,14 +18,14 @@ const Navbar = () => {
 
   const isHomePage = location.pathname === '/';
 
-  // FUNGSI 1: Deteksi otomatis menu aktif berdasarkan posisi scroll
   useEffect(() => {
     if (!isHomePage) return;
 
     const options = {
       root: null,
-      rootMargin: '-150px 0px -50% 0px', 
-      threshold: 0
+      // Ubah rootMargin agar deteksi lebih luas, terutama untuk bagian bawah halaman
+      rootMargin: '-20% 0px -20% 0px', 
+      threshold: 0.1 // Sedikit bagian section terlihat sudah cukup untuk mengaktifkan menu
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -39,14 +38,25 @@ const Navbar = () => {
       });
     }, options);
 
+    // Ambil semua section yang ada ID-nya
     const sections = document.querySelectorAll('section[id]');
     sections.forEach((section) => observer.observe(section));
 
-    return () => sections.forEach((section) => observer.unobserve(section));
-    // Sekarang hanya butuh isHomePage, garis kuning akan hilang
+    // Tambahan: Logika khusus untuk mendeteksi jika sudah mentok di paling bawah (Contact)
+    const handleBottomScroll = () => {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+        setActiveMenu('CONTACT');
+      }
+    };
+
+    window.addEventListener('scroll', handleBottomScroll);
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+      window.removeEventListener('scroll', handleBottomScroll);
+    };
   }, [isHomePage]);
 
-  // FUNGSI 2: Handle klik navigasi
   const handleNavClick = (e, item) => {
     e.preventDefault();
     setActiveMenu(item.name);
@@ -64,7 +74,7 @@ const Navbar = () => {
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = 100; 
+      const offset = 80; 
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;

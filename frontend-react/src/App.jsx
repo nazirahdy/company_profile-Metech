@@ -54,12 +54,11 @@ function AppContent() {
               <Features />
               <section id="services"><Services /></section>
               <section id="portfolio"><Portfolio /></section>
-              
+
+              <section id="blog"><Blog /></section>
+              <Leaders />
               {/* SECTION TESTIMONI DI SINI */}
               <section id="testimonials"><Testimonials /></section>
-              
-              <Leaders />
-              <section id="blog"><Blog /></section>
               <Clients />
               <section id="contact"><Contact /></section>
             </main>
