@@ -28,24 +28,18 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             
-            // --- MULAI PENGATURAN BRANDING ME-TECH ---
-            
-            // 1. Mengubah Warna Tema Utama
+            // --- PENGATURAN BRANDING ME-TECH ---
             ->colors([
-                'primary' => Color::hex('#12B3A8'), 
+                'primary' => Color::hex('#12B3A8'),
             ])
-            
-            // 2. Mengatur Logo Utama
             ->brandLogo(asset('images/logo-metech.png'))
-            ->brandLogoHeight('2.5rem') 
-            
-            // 3. Mengatur Favicon
+            ->brandLogoHeight('2.5rem')
             ->favicon(asset('images/logo-metech.png'))
-            
-            // 4. Mengubah Font Admin Panel
             ->font('Poppins')
-            
-            // --- AKHIR PENGATURAN BRANDING ---
+
+            // --- FITUR DASHBOARD ---
+            // Baris sidebarCollapsible sudah dihapus agar tanda < hilang
+            ->spa() 
 
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -54,9 +48,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                // Widgets bawaan Filament (AccountWidget & FilamentInfoWidget) 
-                // sudah dihapus dari sini agar tampilan bersih dari logo GitHub/Filament.
-                // Nantinya hanya widget statistik custom kamu yang akan muncul otomatis.
+                // Widget terdeteksi otomatis
             ])
             ->middleware([
                 EncryptCookies::class,
