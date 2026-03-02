@@ -56,8 +56,14 @@ class BlogResource extends Resource
                         ->maxLength(50),
 
                     // Publisher ID tetap terisi otomatis di latar belakang (Hidden)
-                    Forms\Components\Hidden::make('publisher_id')
-                        ->default(auth()->id()),
+                    Forms\Components\Select::make('publisher_id')
+                        ->label('Publisher')
+                        ->relationship('publisher', 'name') // Mengambil data otomatis dari tabel Users
+                        ->searchable()
+                        ->preload()
+                        ->placeholder('Pilih user publisher...')
+                        ->required()
+                        ->native(false),
 
                     Forms\Components\FileUpload::make('featured_image')
                         ->label('Gambar Utama')

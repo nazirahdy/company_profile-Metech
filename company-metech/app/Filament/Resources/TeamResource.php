@@ -37,10 +37,10 @@ class TeamResource extends Resource
                             ->label('Foto Profil')
                             ->image()
                             ->disk('public')
-                            ->directory('teams')
-                            ->avatar() 
-                            ->imageEditor() 
-                            ->circleCropper(), 
+                            ->directory('teams') // File masuk ke folder: storage/app/public/teams
+                            ->avatar()
+                            ->imageEditor()
+                            ->circleCropper(),
 
                         Forms\Components\TextInput::make('sort_order')
                             ->label('Urutan Tampilan')
@@ -48,14 +48,13 @@ class TeamResource extends Resource
                             ->default(1)
                             ->required(),
 
-                        // FITUR STATUS ON/OFF
                         Forms\Components\Toggle::make('status')
                             ->label('Status Aktif')
                             ->helperText('Jika OFF, anggota tim tidak akan muncul di website.')
-                            ->default(true) // Default menyala saat tambah data baru
+                            ->default(true)
                             ->onColor('success')
                             ->offColor('danger'),
-                            
+
                     ])->columns(2),
             ]);
     }
@@ -67,6 +66,10 @@ class TeamResource extends Resource
                 Tables\Columns\ImageColumn::make('photo')
                     ->label('Foto')
                     ->disk('public')
+                    // --- PERBAIKAN DI SINI ---
+                    // Karena di form pakai directory('teams'), 
+                    // maka Filament perlu tahu path-nya jika tidak tersimpan otomatis dengan prefix folder di DB
+                    ->visibility('public')
                     ->circular(),
 
                 Tables\Columns\TextColumn::make('name')
@@ -74,10 +77,9 @@ class TeamResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                // TAMPILAN STATUS DI TABEL
                 Tables\Columns\IconColumn::make('status')
                     ->label('Status')
-                    ->boolean() // Menampilkan icon ceklis/silang otomatis
+                    ->boolean()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('position')

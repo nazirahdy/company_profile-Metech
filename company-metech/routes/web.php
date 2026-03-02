@@ -9,6 +9,7 @@ use App\Models\Portofolio;
 use App\Models\Service;
 use App\Models\Blog;
 use App\Models\Testimonial; // Import model Testimonial
+use App\Http\Controllers\AdminController; // Pastikan ini ada
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,7 @@ use App\Models\Testimonial; // Import model Testimonial
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::redirect('/', '/admin');
 // --------------------------------------------------------------------------
 // API ENDPOINTS (Digunakan oleh Frontend React)
 // --------------------------------------------------------------------------
