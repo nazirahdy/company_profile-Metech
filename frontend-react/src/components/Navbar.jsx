@@ -19,13 +19,22 @@ const Navbar = () => {
   const isHomePage = location.pathname === '/';
 
   useEffect(() => {
-    if (!isHomePage) return;
+    // --- LOGIKA 1: UNTUK HALAMAN DETAIL (Portfolio / Blog) ---
+    if (!isHomePage) {
+      if (location.pathname.includes('portfolio')) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setActiveMenu('PORTFOLIO');
+      } else if (location.pathname.includes('blog')) {
+        setActiveMenu('BLOG');
+      }
+      return; // Keluar dari useEffect jika bukan di HomePage agar observer tidak jalan
+    }
 
+    // --- LOGIKA 2: UNTUK HALAMAN HOME (Intersection Observer) ---
     const options = {
       root: null,
-      // Ubah rootMargin agar deteksi lebih luas, terutama untuk bagian bawah halaman
       rootMargin: '-20% 0px -20% 0px', 
-      threshold: 0.1 // Sedikit bagian section terlihat sudah cukup untuk mengaktifkan menu
+      threshold: 0.1 
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -38,11 +47,11 @@ const Navbar = () => {
       });
     }, options);
 
-    // Ambil semua section yang ada ID-nya
+    // Ambil semua section yang memiliki ID
     const sections = document.querySelectorAll('section[id]');
     sections.forEach((section) => observer.observe(section));
 
-    // Tambahan: Logika khusus untuk mendeteksi jika sudah mentok di paling bawah (Contact)
+    // Logika khusus untuk mendeteksi scroll mentok bawah (Contact)
     const handleBottomScroll = () => {
       if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
         setActiveMenu('CONTACT');
@@ -55,13 +64,14 @@ const Navbar = () => {
       sections.forEach((section) => observer.unobserve(section));
       window.removeEventListener('scroll', handleBottomScroll);
     };
-  }, [isHomePage]);
+  }, [isHomePage, location.pathname]); // Pantau perubahan path
 
   const handleNavClick = (e, item) => {
     e.preventDefault();
     setActiveMenu(item.name);
 
     if (!isHomePage) {
+      // Jika di halaman detail, balik ke home dulu baru scroll
       navigate('/');
       setTimeout(() => {
         scrollToSection(item.link.substring(1));
@@ -153,6 +163,10 @@ const Navbar = () => {
           color: #00ced1 !important;
         }
 
+        .active-item {
+          color: #00ced1 !important;
+        }
+
         .nav-logo-animate:hover {
           transform: scale(1.1);
           transition: 0.3s;
@@ -160,6 +174,13 @@ const Navbar = () => {
 
         @media (max-width: 991px) {
           .nav-underline { display: none; }
+          .navbar-collapse {
+             background: white;
+             padding: 20px;
+             border-radius: 15px;
+             margin-top: 10px;
+             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+          }
         }
       `}</style>
     </nav>

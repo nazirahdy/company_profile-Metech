@@ -10,18 +10,22 @@ class Blog extends Model
     use HasFactory;
     protected $table = 'blogs'; 
 
-   protected $fillable = [
-    'title', 
-    'slug', 
-    'content', 
-    'featured_image', 
-    'publisher_id', 
-    'status', 
-    'creator_name'
-];
+    // TAMBAHKAN BARIS INI: Memaksa relasi publisher selalu ikut dalam JSON API
+    protected $with = ['publisher']; 
 
-public function publisher()
-{
-    return $this->belongsTo(User::class, 'publisher_id');
-}
+    protected $fillable = [
+        'title', 
+        'slug', 
+        'content', 
+        'featured_image', 
+        'publisher_id', 
+        'status', 
+        'creator_name'
+    ];
+
+    public function publisher()
+    {
+        // Pastikan User::class sudah di-import di atas jika diperlukan
+        return $this->belongsTo(User::class, 'publisher_id');
+    }
 }

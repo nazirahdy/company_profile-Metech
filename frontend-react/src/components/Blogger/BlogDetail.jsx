@@ -41,28 +41,32 @@ const BlogDetail = () => {
         <div className="row justify-content-center">
           <div className="col-lg-9">
             
-            {/* TOMBOL KEMBALI (SUDAH JADI BUTTON SESUAI REQUEST) */}
+            {/* Tombol Kembali */}
             <nav className="mb-4">
               <Link 
                 to="/blog" 
                 className="btn btn-info text-white rounded-pill px-4 py-2 fw-bold shadow-sm d-inline-flex align-items-center back-btn-custom"
-                style={{ 
-                  backgroundColor: '#00ced1', 
-                  border: 'none',
-                  fontSize: '13px'
-                }}
+                style={{ backgroundColor: '#00ced1', border: 'none', fontSize: '13px' }}
               >
                 <i className="bi bi-arrow-left me-2"></i> KEMBALI KE DAFTAR ARTIKEL
               </Link>
             </nav>
 
             <header className="mb-5">
-              <h1 className="fw-bold display-5 mb-4" style={{ color: '#1a1a3d' }}>
-                {blog.title}
-              </h1>
-              <div className="d-flex align-items-center gap-3 text-muted border-top border-bottom py-3">
-                <small><i className="bi bi-calendar3 me-2 text-info"></i>{new Date(blog.created_at).toLocaleDateString('id-ID')}</small>
-               <small><i className="bi bi-person-circle me-2 text-info"></i>{blog.creator_name || 'Admin'}</small>
+              <h1 className="fw-bold display-5 mb-4" style={{ color: '#1a1a3d' }}>{blog.title}</h1>
+              <div className="d-flex align-items-center gap-4 text-muted border-top border-bottom py-3 flex-wrap">
+                <small className="d-flex align-items-center">
+                  <i className="bi bi-calendar3 me-2 text-info"></i>
+                  {new Date(blog.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </small>
+                <small className="d-flex align-items-center">
+                  <i className="bi bi-building me-2 text-info"></i>
+                  {blog.publisher?.name || 'Me-tech'}
+                </small>
+                <small className="d-flex align-items-center">
+                  <i className="bi bi-person-circle me-2 text-info"></i>
+                  {blog.creator_name || 'Admin'}
+                </small>
               </div>
             </header>
 
@@ -98,16 +102,9 @@ const BlogDetail = () => {
       
       <style>{`
         .blog-text p { margin-bottom: 1.5rem; }
-        .blog-detail-page {
-            overflow: hidden;
-            margin-bottom: 0 !important;
-        }
-        .back-btn-custom:hover {
-          background-color: #1a1a3d !important;
-          transform: translateY(-3px);
-          transition: 0.3s ease;
-          color: white !important;
-        }
+        .blog-detail-page { overflow: hidden; margin-bottom: 0 !important; }
+        .back-btn-custom:hover { background-color: #1a1a3d !important; transform: translateY(-3px); transition: 0.3s ease; color: white !important; }
+        .blog-text img { max-width: 100%; height: auto; border-radius: 15px; margin: 20px 0; }
       `}</style>
     </div>
   );

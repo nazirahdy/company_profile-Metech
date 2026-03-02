@@ -2,7 +2,6 @@ import React from 'react';
 
 const Features = () => {
   return (
-    // Menghilangkan border dan memastikan background solid white
     <section className="py-5 bg-white border-0" style={{ border: 'none', outline: 'none' }}>
       <div className="container">
         <div className="row align-items-center">
@@ -20,19 +19,26 @@ const Features = () => {
           </div>
 
           <div className="col-lg-6 ps-lg-5" data-aos="fade-left">
-            <h6 className="fw-bold mb-2" style={{ color: '#00ced1', letterSpacing: '3px', fontSize: '14px' }}>
-                <b>FEATURES</b>
-            </h6>
+            {/* TULISAN FEATURES: Gede dan Sangat Tebal */}
+            <h2 className="mb-2" style={{ 
+              color: '#00ced1', 
+              letterSpacing: '3px', 
+              fontSize: '3rem', 
+              fontWeight: '900' 
+            }}>
+              FEATURES
+            </h2>
 
-            <h2 className="mb-3" style={{ 
-              fontSize: '2.5rem', 
-              lineHeight: '1.2', 
-              fontWeight: '900', 
+            {/* KALIMAT SOLUSI: Lebih Kecil tapi Tetap Bold */}
+            <h6 className="mb-3" style={{ 
+              fontSize: '1.25rem', 
+              lineHeight: '1.4', 
+              fontWeight: '700', // Tetap Bold
               color: '#333335',
               textTransform: 'uppercase'
             }}>
               Dapatkan Solusi Kebutuhan Teknologi Bisnis Anda Bersama Kami
-            </h2>
+            </h6>
 
             <div style={{ width: '70px', height: '5px', background: '#00ced1', borderRadius: '10px', marginBottom: '30px' }}></div>
             

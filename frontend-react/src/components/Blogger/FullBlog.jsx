@@ -5,8 +5,7 @@ const FullBlog = () => {
   const [blogs, setBlogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; 
-
-  const API_BASE_URL = 'http://localhost:8000';
+  const API_BASE_URL = 'http://127.0.0.1:8000';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,7 +27,7 @@ const FullBlog = () => {
     <div className="bg-white min-vh-100" style={{ paddingTop: '100px', paddingBottom: '80px' }}>
       <div className="container">
         
-        {/* HEADER SECTION */}
+        {/* Header Section */}
         <div className="text-center mb-5" data-aos="fade-up">
           <h2 className="fw-black mb-0" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#1a1a3d' }}>
             OUR FULL <span style={{ color: '#00ced1' }}>BLOG</span>
@@ -37,7 +36,7 @@ const FullBlog = () => {
           <p className="text-muted mt-3">Temukan berita dan update teknologi terbaru dari kami</p>
         </div>
 
-        {/* BLOG GRID */}
+        {/* Blog Grid */}
         <div className="row g-4" data-aos="fade-up">
           {currentItems.length > 0 ? (
             currentItems.map((post) => (
@@ -49,6 +48,7 @@ const FullBlog = () => {
                       alt={post.title} 
                       className="img-fluid w-100 h-100 blog-img" 
                       style={{ objectFit: 'cover', transition: '0.5s' }} 
+                      onError={(e) => { e.target.src = "https://via.placeholder.com/400x250?text=No+Image"; }}
                     />
                   </div>
                   
@@ -57,6 +57,10 @@ const FullBlog = () => {
                       <div className="d-flex align-items-center">
                         <i className="bi bi-calendar3 me-2" style={{ color: '#00ced1' }}></i>
                         {new Date(post.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <i className="bi bi-building me-2" style={{ color: '#00ced1' }}></i>
+                        {post.publisher?.name || 'Me-tech'}
                       </div>
                       <div className="d-flex align-items-center">
                         <i className="bi bi-person-circle me-2" style={{ color: '#00ced1' }}></i>
@@ -87,10 +91,8 @@ const FullBlog = () => {
           )}
         </div>
 
-        {/* AREA NAVIGASI (PAGINATION & TOMBOL KEMBALI DI SEBELAH KANANNYA) */}
+        {/* Navigation Area */}
         <div className="d-flex justify-content-center align-items-center mt-5 gap-3 pt-4 border-top">
-          
-          {/* NOMOR HALAMAN */}
           {totalPages > 1 && (
             <div className="d-flex gap-2">
               {[...Array(totalPages)].map((_, i) => (
@@ -99,12 +101,7 @@ const FullBlog = () => {
                   onClick={() => handlePaginate(i + 1)}
                   className={`btn shadow-sm`}
                   style={{ 
-                    width: '45px', 
-                    height: '45px', 
-                    borderRadius: '12px', 
-                    fontWeight: 'bold', 
-                    border: 'none',
-                    transition: '0.3s',
+                    width: '45px', height: '45px', borderRadius: '12px', fontWeight: 'bold', border: 'none', transition: '0.3s',
                     backgroundColor: currentPage === i + 1 ? '#00ced1' : '#fff',
                     color: currentPage === i + 1 ? '#fff' : '#555'
                   }}
@@ -115,22 +112,13 @@ const FullBlog = () => {
             </div>
           )}
 
-          {/* TOMBOL KEMBALI (Desain disamakan dengan FullPortfolio) */}
           <Link 
             to="/" 
             className="btn-kembali-blog text-decoration-none shadow-sm"
             style={{
-              backgroundColor: '#00ced1',
-              color: '#fff',
-              padding: '0 25px',
-              borderRadius: '12px',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              border: '2px solid #00ced1',
-              fontSize: '14px',
-              height: '45px',
-              display: 'flex',
-              alignItems: 'center'
+              backgroundColor: '#00ced1', color: '#fff', padding: '0 25px', borderRadius: '12px',
+              fontWeight: '600', transition: 'all 0.3s ease', border: '2px solid #00ced1',
+              fontSize: '14px', height: '45px', display: 'flex', alignItems: 'center'
             }}
           >
             Kembali
@@ -142,14 +130,7 @@ const FullBlog = () => {
         .blog-card { transition: all 0.3s ease; }
         .blog-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important; }
         .blog-card:hover .blog-img { transform: scale(1.1); }
-        
-        .btn-kembali-blog:hover {
-          background-color: transparent !important;
-          color: #00ced1 !important;
-          transform: translateY(-2px);
-          box-shadow: 0 5px 15px rgba(0, 206, 209, 0.2);
-        }
-
+        .btn-kembali-blog:hover { background-color: transparent !important; color: #00ced1 !important; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 206, 209, 0.2); }
         .readmore-link:hover { color: #1a1a3d !important; }
       `}</style>
     </div>
