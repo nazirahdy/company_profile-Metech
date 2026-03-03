@@ -19,30 +19,62 @@ class MessageChart extends ChartWidget
         $start = now()->startOfWeek();
         $end = now()->endOfWeek();
 
-        // 2. Ambil data langsung dari Database menggunakan Query Group By
-        $data = Contact::select(
+        // 2. Ambil data asli dari Database
+        $rawData = Contact::select(
                 DB::raw('DATE(created_at) as date'),
                 DB::raw('count(*) as aggregate')
             )
             ->whereBetween('created_at', [$start, $end])
             ->groupBy('date')
-            ->orderBy('date', 'ASC')
-            ->get();
+            ->get()
+            ->pluck('aggregate', 'date'); // Format: ['2026-03-02' => 3]
 
-        // 3. Mapping data untuk Chart
+        // 3. Buat kerangka data untuk 7 hari (Senin - Minggu)
+        $counts = [];
+        $labels = [];
+
+        for ($date = $start->copy(); $date <= $end; $date->addDay()) {
+            $formattedDate = $date->format('Y-m-d');
+            
+            // Masukkan nama hari ke labels
+            $labels[] = $date->translatedFormat('D'); 
+            
+            // Ambil jumlah pesan, jika tidak ada maka isi 0 agar garis tersambung
+            $counts[] = $rawData->get($formattedDate, 0); 
+        }
+
         return [
             'datasets' => [
                 [
                     'label' => 'Pesan Masuk',
-                    'data' => $data->pluck('aggregate'), // Ambil jumlahnya
+                    'data' => $counts, // Berisi 7 angka sesuai jumlah hari
                     'fill' => 'start',
                     'borderColor' => '#12B3A8',
                     'backgroundColor' => 'rgba(18, 179, 168, 0.1)',
                     'tension' => 0.4,
                 ],
             ],
-            // Format label menjadi nama hari (Sen, Sel, Rab, dst)
-            'labels' => $data->map(fn ($value) => Carbon::parse($value->date)->translatedFormat('D')),
+            'labels' => $labels,
+        ];
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'scales' => [
+                'y' => [
+                    'min' => 0,
+                    'max' => 10,
+                    'ticks' => [
+                        'stepSize' => 1,
+                    ],
+                ],
+            ],
+            'plugins' => [
+                'legend' => [
+                    'display' => true,
+                ],
+            ],
         ];
     }
 
