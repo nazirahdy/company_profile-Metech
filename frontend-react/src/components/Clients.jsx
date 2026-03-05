@@ -16,20 +16,33 @@ const Clients = () => {
   ];
 
   return (
-    <section id="clients" className="py-5" style={{ backgroundColor: '#f6f9ff', boxShadow: '0 7px 25px 0 rgba(0,0,0,0.05)' }}>
-      <div className="container" data-aos="fade-up">
-        {/* Header Section sesuai foto */}
+    <section id="clients" className="py-5" style={{ backgroundColor: '#ffffff' }}>
+      <div className="container py-4" data-aos="fade-up">
+        
+        {/* Header Section Minimalis */}
         <div className="text-center mb-5">
-          <h2 className="fw-bold" style={{ fontSize: '2.5rem', color: '#333' }}>
-            Our <span style={{ color: '#00ced1' }}>Clients</span>
+          <h2 className="fw-bold mb-3" style={{ fontSize: '2.5rem', color: '#1a1a3d' }}>
+            Our Trusted <span style={{ color: '#00ced1' }}>Clients</span>
           </h2>
+          <div style={{ 
+            width: '50px', 
+            height: '4px', 
+            background: '#00ced1', 
+            margin: '0 auto', 
+            borderRadius: '10px' 
+          }}></div>
         </div>
 
         <Swiper
           modules={[Autoplay, Pagination]}
-          spaceBetween={20}
+          spaceBetween={40}
           slidesPerView={2}
-          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          loop={true}
+          autoplay={{ 
+            delay: 2000, 
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true 
+          }}
           pagination={{ clickable: true }}
           breakpoints={{
             640: { slidesPerView: 3 },
@@ -40,23 +53,60 @@ const Clients = () => {
         >
           {clientLogos.map((logo, index) => (
             <SwiperSlide key={index}>
-              <div className="client-box bg-white p-3 d-flex align-items-center justify-content-center shadow-sm" 
-                   style={{ height: '100px', borderRadius: '12px' }}>
+              <div className="logo-item-wrapper">
                 <img 
                   src={`https://storage.me-tech.id/clients/${logo}`} 
-                  className="img-fluid" 
-                  alt="Client Logo" 
-                  style={{ maxHeight: '65px', objectFit: 'contain' }} 
+                  className="img-fluid client-logo-clean" 
+                  alt={`Client ${index}`} 
                 />
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
+
       <style>{`
-        .client-box { transition: transform 0.3s ease; border: 1px solid #f0f0f0; }
-        .client-box:hover { transform: translateY(-5px); }
-        .swiper-pagination-bullet-active { background-color: #00ced1 !important; }
+        .logo-item-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 120px;
+          padding: 10px;
+          transition: all 0.3s ease;
+        }
+
+        .client-logo-clean {
+          max-height: 75px;
+          width: auto;
+          object-fit: contain;
+          transition: all 0.4s ease;
+          /* Logo berwarna langsung, sedikit transparansi agar elegan */
+          opacity: 0.85; 
+        }
+
+        .logo-item-wrapper:hover .client-logo-clean {
+          transform: scale(1.15);
+          opacity: 1;
+          /* Efek bayangan halus di belakang logo saat hover */
+          filter: drop-shadow(0 10px 15px rgba(0, 206, 209, 0.2));
+        }
+
+        /* Pagination Dots Modern */
+        .swiper-pagination-bullet {
+          background: #d1d1d1 !important;
+          opacity: 1 !important;
+        }
+
+        .swiper-pagination-bullet-active {
+          background: #00ced1 !important;
+          width: 20px !important;
+          border-radius: 5px !important;
+        }
+
+        @media (max-width: 768px) {
+          .logo-item-wrapper { height: 80px; }
+          .client-logo-clean { max-height: 50px; }
+        }
       `}</style>
     </section>
   );

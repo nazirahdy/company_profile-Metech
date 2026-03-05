@@ -33,6 +33,7 @@ const Contact = () => {
         });
         setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       }
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setStatus({ 
         type: 'danger', 
@@ -72,7 +73,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h6 className="fw-bold mb-0">Call Us</h6>
-                  <p className="text-muted small mb-0">+62 878-2323-7339</p>
+                  <p className="text-muted small mb-0">+62 859-4201-1511</p>
                 </div>
               </div>
 
