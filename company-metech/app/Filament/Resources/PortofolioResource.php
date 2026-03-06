@@ -14,7 +14,13 @@ class PortofolioResource extends Resource
 {
     protected static ?string $model = Portofolio::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+    // Gunakan nama grup yang sama agar menyatu
+    protected static ?string $navigationGroup = 'Manajemen Portofolio';
+
+    // Opsional: Letakkan di bawah Categories
+    protected static ?int $navigationSort = 1;
+
+    // protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
     public static function form(Form $form): Form
     {
@@ -25,7 +31,7 @@ class PortofolioResource extends Resource
                         // Dropdown untuk memilih kategori berdasarkan database
                         Forms\Components\Select::make('category_id')
                             ->label('Kategori')
-                            ->relationship('category', 'nama') 
+                            ->relationship('category', 'nama')
                             ->required()
                             ->searchable()
                             ->preload(),

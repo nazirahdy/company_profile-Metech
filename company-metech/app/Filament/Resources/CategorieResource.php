@@ -14,7 +14,13 @@ class CategorieResource extends Resource
 {
     protected static ?string $model = Categorie::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    // Tambahkan baris ini
+    protected static ?string $navigationGroup = 'Manajemen Portofolio';
+
+    // Opsional: Atur urutan di dalam grup (angka kecil di atas)
+    protected static ?int $navigationSort = 1;
+
+    // protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     public static function form(Form $form): Form
     {
@@ -48,7 +54,7 @@ class CategorieResource extends Resource
             ->actions([
                 // Tombol Edit
                 Tables\Actions\EditAction::make(),
-                
+
                 // Tambahkan Tombol Delete di sini agar muncul bersandingan
                 Tables\Actions\DeleteAction::make(),
             ])

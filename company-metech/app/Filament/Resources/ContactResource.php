@@ -139,4 +139,17 @@ class ContactResource extends Resource
             'index' => Pages\ListContacts::route('/'),
         ];
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        // Menghitung jumlah pesan yang statusnya masih 'pending'
+        return static::getModel()::where('status', 'pending')->count() ?: null;
+    }
+
+    // Opsional: Memberi warna pada badge tersebut
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'danger'; // Warna merah
+    }
+
 }
